@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <title>{{ dj.name }}'s Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FullCalendar CDN CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet" />
+    <!-- FullCalendar CDN JS -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+    <style>
+        .venue-legend {
+            margin-top: 20px;
+            padding: 10px;
+        }
+        .venue-legend h3 {
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+        .venue-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .color-box {
+            width: 15px;
+            height: 15px;
+            margin-right: 8px;
+            border-radius: 3px;
+        }
+        .drift-color { background-color: #4CAF50; }
+        .aura-color { background-color: #FF5722; }
+        .azure-color { background-color: #2196F3; }
+        .ammos-color { background-color: #9C27B0; }
+    </style>
+</head>
+<body>
+    {% include "core/menu.html" %}
+    <div class="bento-dashboard">
+        <aside class="bento-panel">
+            <div class="panel-card">
+                <h2 style="margin-bottom: 1.2rem;">My Panel</h2>
+                <ul>
+                    <li>
+                        <button id="notification-button" style="all: unset; cursor: pointer; font-size: 1rem;">
+                            Notifications
+                            <span id="notification-badge" style="background: red; color: white; border-radius: 50%; padding: 0.2rem 0.55rem; font-size: 0.8rem; margin-left: 0.4rem; display: none;">0</span>
+                        </button>
+                    </li>
+                    <!-- <li>Send to HR</li> -->
+                </ul>
+                
+                <!-- Leyenda de venues -->
+                <div class="venue-legend">
+                    <h3>Venues</h3>
+                    <div class="venue-item">
+                        <div class="color-box drift-color"></div>
+                        <span>Drift</span>
+                    </div>
+                    <div class="venue-item">
+                        <div class="color-box aura-color"></div>
+                        <span>Aura</span>
+                    </div>
+                    <div class="venue-item">
+                        <div class="color-box azure-color"></div>
+                        <span>Azure</span>
+                    </div>
+                    <div class="venue-item">
+                        <div class="color-box ammos-color"></div>
+                        <span>Ammos</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <main class="bento-calendar">
+            <h1>My Calendar</h1>
+            <div id="calendar"></div>
+            <!-- Aquí irá el calendario FullCalendar con JS -->
+        </main>
+    </div>
+</body>
+    <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const currentDjId = {{ dj.id }};
+    var calendarEl = document.getElementById('calendar');
+    var notificationBadge = document.getElementById('notification-badge');
+    var notificationCount = 0;
+    var notifications = [];
+
+    function updateBadge() {
+      if (notificationCount > 0) {
+        notificationBadge.innerText = notificationCount;
+        notificationBadge.style.display = 'inline-block';
+      } else {
+        notificationBadge.style.display = 'none';
+      }
+    }
+
+    function createNotificationModal() {
+      const existingModal = document.getElementById('notification-modal');
+      if (existingModal) existingModal.remove();
+
+      const modal = document.createElement('div');
+      modal.id = 'notification-modal';
+      modal.style.position = 'fixed';
+      modal.style.top = '0';
+      modal.style.left = '0';
+      modal.style.width = '100%';
+      modal.style.height = '100%';
+      modal.style.backgroundColor = 'rgba(0,0,0,0.5)';
+      modal.style.display = 'flex';
+      modal.style.alignItems = 'center';
+      modal.style.justifyContent = 'center';
+      modal.style.zIndex = '1000';
+
+      const content = document.createElement('div');
+      content.style.background = '#fff';
+      content.style.padding = '1.5rem';
+      content.style.borderRadius = '10px';
+      content.style.minWidth = '300px';
+      content.style.maxWidth = '500px';
+      content.style.position = 'relative';
+      content.innerHTML = `
+        <h3 style="margin-top: 0;">Notifications</h3>
+        <ul style="list-style: none; padding: 0; font-size: 0.95rem;">
+          ${notifications.map(n => `<li style="margin-bottom: 0.6rem;">${n}</li>`).join('')}
+        </ul>
+        <button id="close-modal-btn" style="position: absolute; top: 8px; right: 12px; background: none; border: none; font-size: 1.2rem;">✕</button>
+      `;
+      content.querySelector('ul').innerHTML = notifications.map(n => `<li style="margin-bottom: 0.6rem;">${n}</li>`).join('');
+      modal.appendChild(content);
+      document.body.appendChild(modal);
+
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal || e.target.id === 'close-modal-btn') {
+          modal.remove();
+        }
+      });
+    }
+
+    document.getElementById('notification-button')?.addEventListener('click', function () {
+      createNotificationModal();
+    });
+
+    function addNotification(message, djId) {
+      if (parseInt(djId) !== currentDjId) return;
+      notifications.push(message);
+      notificationCount++;
+      updateBadge();
+    }
+
+    // Listen to custom shift events
+    document.addEventListener('shiftAdded', function (e) {
+      addNotification('Shift added: ' + e.detail.title, e.detail.djId);
+    });
+
+    document.addEventListener('shiftRemoved', function (e) {
+      addNotification('Shift removed: ' + e.detail.title, e.detail.djId);
+    });
+
+    if (calendarEl) {
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        height: "auto",
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,listWeek'
+        },
+        firstDay: 1,
+        eventContent: function (arg) {
+          var customEl = document.createElement('div');
+          customEl.className = 'fc-event-content';
+          customEl.style.backgroundColor = arg.event.backgroundColor;
+          customEl.style.color = 'white';
+          customEl.style.padding = '2px 5px';
+          customEl.style.borderRadius = '3px';
+          customEl.innerText = arg.event.title;
+          return { domNodes: [customEl] };
+        },
+        events: [
+          {% for shift in shifts %}
+          {
+            title: "{{ shift.venue }} ({{ shift.start_time }} - {{ shift.end_time }})",
+            start: "{{ shift.date }}T{{ shift.start_time }}",
+            end: "{{ shift.date }}T{{ shift.end_time }}",
+            extendedProps: {
+              venue: "{{ shift.venue }}",
+              start_time: "{{ shift.start_time }}",
+              end_time: "{{ shift.end_time }}"
+            },
+            {% if shift.venue == "Drift" %}
+            backgroundColor: "#4CAF50",
+            {% elif shift.venue == "Aura" %}
+            backgroundColor: "#FF5722",
+            {% elif shift.venue == "Azure" %}
+            backgroundColor: "#2196F3",
+            {% elif shift.venue == "Ammos" %}
+            backgroundColor: "#9C27B0",
+            {% else %}
+            backgroundColor: "#1D4ED8",
+            {% endif %}
+          },
+          {% endfor %}
+        ]
+      });
+      calendar.render();
+      // Dispatch notifications based on URL query parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const added = urlParams.get('shift_added');
+      const removed = urlParams.get('shift_removed');
+
+      if (added) {
+        const event = new CustomEvent('shiftAdded', {
+          detail: { title: decodeURIComponent(added), djId: currentDjId }
+        });
+        document.dispatchEvent(event);
+        console.log("Shift added event dispatched:", added);
+      }
+
+      if (removed) {
+        const event = new CustomEvent('shiftRemoved', {
+          detail: { title: decodeURIComponent(removed), djId: currentDjId }
+        });
+        document.dispatchEvent(event);
+        console.log("Shift removed event dispatched:", removed);
+      }
+      
+      // Verificar notificaciones del localStorage
+      const checkLocalStorageNotifications = function() {
+          const addedData = localStorage.getItem('shiftAdded');
+          const removedData = localStorage.getItem('shiftRemoved');
+          
+          if (addedData) {
+              try {
+                  const data = JSON.parse(addedData);
+                  // Solo procesar si es reciente (menos de 5 segundos)
+                  if (new Date().getTime() - data.timestamp < 5000) {
+                      const event = new CustomEvent('shiftAdded', {
+                          detail: { title: data.title, djId: data.djId }
+                      });
+                      document.dispatchEvent(event);
+                      console.log("Shift added event dispatched from localStorage");
+                  }
+                  // Limpiar después de procesar
+                  localStorage.removeItem('shiftAdded');
+              } catch (e) {
+                  console.error("Error processing shiftAdded from localStorage", e);
+                  localStorage.removeItem('shiftAdded');
+              }
+          }
+          
+          if (removedData) {
+              try {
+                  const data = JSON.parse(removedData);
+                  // Solo procesar si es reciente (menos de 5 segundos)
+                  if (new Date().getTime() - data.timestamp < 5000) {
+                      const event = new CustomEvent('shiftRemoved', {
+                          detail: { title: data.title, djId: data.djId }
+                      });
+                      document.dispatchEvent(event);
+                      console.log("Shift removed event dispatched from localStorage");
+                  }
+                  // Limpiar después de procesar
+                  localStorage.removeItem('shiftRemoved');
+              } catch (e) {
+                  console.error("Error processing shiftRemoved from localStorage", e);
+                  localStorage.removeItem('shiftRemoved');
+              }
+          }
+      };
+      
+      // Verificar al cargar la página
+      checkLocalStorageNotifications();
+    }
+  });
+</script>
+</html>

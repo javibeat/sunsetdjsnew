@@ -1,0 +1,170 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <title>Global Calendar</title>
+</head>
+<body>
+    {% include "core/menu.html" %}
+
+    <div class="container global-calendar-container">
+        <h1>Global Calendar</h1>
+        <p style="color: #4a4a4a; margin-bottom: 2rem;">All events and DJ shifts across all venues.</p>
+    
+        <!-- Calendario FullCalendar (visible en escritorio) -->
+        <div id="calendar" class="desktop-calendar"></div>
+    
+        <!-- Tabla (visible en móvil) -->
+        {% if shifts %}
+        <div class="mobile-calendar">
+            <div style="overflow-x: auto;">
+                <table style="width:100%; border-collapse: collapse; background: white; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                    <thead style="background: #f5f7fa;">
+                        <tr>
+                            <th style="padding: 1rem; text-align:left;">Date</th>
+                            <th style="padding: 1rem; text-align:left;">DJ</th>
+                            <th style="padding: 1rem; text-align:left;">Event/Shift</th>
+                            <th style="padding: 1rem; text-align:left;">Venue</th>
+                            <th style="padding: 1rem; text-align:left;">Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for shift in shifts %}
+                        <tr style="border-top: 1px solid #ececec;">
+                            <td style="padding: 0.7rem 1rem;">{{ shift.date }}</td>
+                            <td style="padding: 0.7rem 1rem;">
+                                {% if shift.dj %}
+                                    <span style="color: {{ shift.color }}; font-weight: 600;">{{ shift.dj.name }}</span>
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                            <td style="padding: 0.7rem 1rem;">
+                                {% if shift.is_event %}
+                                    <span style="color:#D97706; font-weight: 600;">Event</span>
+                                    {% if shift.comment %}
+                                        <br><span style="color:#6B7280;">{{ shift.comment }}</span>
+                                    {% endif %}
+                                {% else %}
+                                    Shift
+                                {% endif %}
+                            </td>
+                            <td style="padding: 0.7rem 1rem;">{{ shift.venue|default:"-" }}</td>
+                            <td style="padding: 0.7rem 1rem;">{{ shift.start_time }} - {{ shift.end_time }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% else %}
+            <p style="color:#666; font-size:1.1rem;">No shifts available.</p>
+        {% endif %}
+    </div>
+    
+    <!-- FullCalendar CDN CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet" />
+    <!-- FullCalendar CDN JS -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+    
+    <style>
+        .global-calendar-container {
+            max-width: 1000px;
+        }
+        
+        /* Estilos responsive */
+        .desktop-calendar {
+            display: block;
+        }
+        
+        .mobile-calendar {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .desktop-calendar {
+                display: none;
+            }
+            
+            .mobile-calendar {
+                display: block;
+            }
+        }
+    </style>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            if (calendarEl) {
+                // Definir colores para cada DJ
+                const djColors = {
+                    'Emre': '#4285F4',
+                    'Elena': '#EA4335',
+                    'Batu': '#FBBC05',
+                    'Yasin': '#34A853',
+                    'Reda': '#8E24AA',
+                    'Sergio': '#16A085',
+                    'Javi': '#41B0F6'
+                };
+                
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'dayGridMonth',
+                    height: "auto",
+                    eventMaxStack: 6,
+                    dayMaxEventRows: true,
+                    firstDay: 1,
+                    headerToolbar: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek,listWeek'
+                    },
+                    events: [
+                        {% for shift in shifts %}
+                        {
+                            id: "{{ shift.id }}",
+                            title: "{{ shift.dj.name|default:'Sin DJ' }} - {{ shift.venue }} ({{ shift.start_time }} - {{ shift.end_time }})",
+                            start: "{{ shift.date }}T{{ shift.start_time }}",
+                            end: "{{ shift.date }}T{{ shift.end_time }}",
+                            extendedProps: {
+                                dj: "{{ shift.dj.name|default:'Sin DJ' }}",
+                                venue: "{{ shift.venue }}",
+                                isEvent: {{ shift.is_event|yesno:"true,false" }},
+                                comment: "{{ shift.comment|default:'' }}"
+                            },
+                            backgroundColor: "{{ shift.color|default:'#999999' }}",
+                            textColor: "#ffffff",
+                            borderColor: "transparent"
+                        }{% if not forloop.last %},{% endif %}
+                        {% endfor %}
+                    ],
+                    eventContent: function(arg) {
+                        var customEl = document.createElement('div');
+                        customEl.className = 'fc-event-content';
+                        customEl.setAttribute('data-dj', arg.event.extendedProps.dj);
+                        customEl.style.backgroundColor = arg.event.backgroundColor;
+                        customEl.style.color = 'white';
+                        customEl.style.padding = '2px 5px';
+                        customEl.style.borderRadius = '3px';
+                        customEl.innerText = arg.event.title;
+                        return { domNodes: [customEl] };
+                    },
+                    eventDidMount: function(info) {
+                        // Añadir tooltip con información adicional
+                        if (info.event.extendedProps.isEvent && info.event.extendedProps.comment) {
+                            var tooltip = document.createElement('div');
+                            tooltip.className = 'event-tooltip';
+                            tooltip.innerHTML = info.event.extendedProps.comment;
+                            info.el.appendChild(tooltip);
+                        }
+                    }
+                });
+                calendar.render();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+
+
+<nav class="sidebar">
+    <h2>Sunset DJs</h2>
+    <ul>
+        <li><a href="/">Home</a></li>
+
+        {% if request.session.dj_id %}
+            <li><a href="/dj/{{ request.session.dj_id }}/dashboard/">My Calendar</a></li>
+        {% endif %}
+
+        {% if request.session.dj_id == 1 %}
+            <li><a href="/insert/">Insert Events</a></li>
+            <li><a href="/admin/">Admin Panel</a></li>
+        {% endif %}
+    </ul>
+</nav>
