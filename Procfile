@@ -1,1 +1,1 @@
-web: gunicorn sunsetcore.wsgi:application
+web: gunicorn sunsetcore.wsgi
