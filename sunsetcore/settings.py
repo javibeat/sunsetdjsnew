@@ -157,7 +157,7 @@ SESSION_COOKIE_AGE = 60 * 60 * 24 * 30  # 30 días
 SESSION_SAVE_EVERY_REQUEST = True
 
 
-# CSRF trusted origins for Railway
+# CSRF trusted origins for Render
 CSRF_TRUSTED_ORIGINS = [
-    'https://sunsetdjsnew-production.up.railway.app',
+    'https://sunsetdjsnew.onrender.com',
 ]
