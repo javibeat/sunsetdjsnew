@@ -29,7 +29,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["*", "javibeat.up.railway.app"]
+ALLOWED_HOSTS = ["*", "sunsetdjsnew-production.up.railway.app"]
 
 
 # Application definition
@@ -124,6 +124,8 @@ STATIC_URL = 'static/'
 
 import os
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'core/statics')]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
