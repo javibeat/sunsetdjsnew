@@ -1,0 +1,1680 @@
+[
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "admin",
+        "model": "logentry"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "auth",
+        "model": "permission"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "auth",
+        "model": "group"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "auth",
+        "model": "user"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "contenttypes",
+        "model": "contenttype"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "sessions",
+        "model": "session"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "core",
+        "model": "shift"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "core",
+        "model": "dj"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "fields": {
+        "app_label": "core",
+        "model": "notification"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "k2zs3zyhzimvvnv4z117nfupevfmcw3h",
+    "fields": {
+        "session_data": "eyJkal9pZCI6MX0:1uHhVk:qoE6VF2JWHyRPYrsfXcCJe2ZP3rbQ3oFMbx10WdE2zg",
+        "expire_date": "2025-06-20T11:21:24.897Z"
+    }
+},
+{
+    "model": "core.dj",
+    "pk": 1,
+    "fields": {
+        "name": "Javi",
+        "email": "javibeat@icloud.com",
+        "is_verified": true,
+        "token": null,
+        "created_at": "2025-05-16T10:05:19.903Z"
+    }
+},
+{
+    "model": "core.dj",
+    "pk": 2,
+    "fields": {
+        "name": "Sergio",
+        "email": null,
+        "is_verified": false,
+        "token": null,
+        "created_at": "2025-05-16T10:05:27.046Z"
+    }
+},
+{
+    "model": "core.dj",
+    "pk": 3,
+    "fields": {
+        "name": "Reda",
+        "email": null,
+        "is_verified": false,
+        "token": null,
+        "created_at": "2025-05-16T10:05:33.413Z"
+    }
+},
+{
+    "model": "core.dj",
+    "pk": 4,
+    "fields": {
+        "name": "Yasin",
+        "email": null,
+        "is_verified": false,
+        "token": null,
+        "created_at": "2025-05-16T10:05:45.053Z"
+    }
+},
+{
+    "model": "core.dj",
+    "pk": 5,
+    "fields": {
+        "name": "Batu",
+        "email": null,
+        "is_verified": false,
+        "token": null,
+        "created_at": "2025-05-16T10:05:51.814Z"
+    }
+},
+{
+    "model": "core.dj",
+    "pk": 6,
+    "fields": {
+        "name": "Elena",
+        "email": null,
+        "is_verified": false,
+        "token": null,
+        "created_at": "2025-05-16T10:05:54.463Z"
+    }
+},
+{
+    "model": "core.dj",
+    "pk": 7,
+    "fields": {
+        "name": "Emre",
+        "email": null,
+        "is_verified": false,
+        "token": null,
+        "created_at": "2025-05-16T10:05:56.462Z"
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 3,
+    "fields": {
+        "title": "",
+        "date": "2025-05-21",
+        "start_time": "13:30:00",
+        "end_time": "17:30:00",
+        "venue": "Azure",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 1
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 4,
+    "fields": {
+        "title": "",
+        "date": "2025-05-26",
+        "start_time": "13:30:00",
+        "end_time": "17:30:00",
+        "venue": "Azure",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 1
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 5,
+    "fields": {
+        "title": "",
+        "date": "2025-05-27",
+        "start_time": "13:30:00",
+        "end_time": "17:30:00",
+        "venue": "Azure",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 1
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 6,
+    "fields": {
+        "title": "",
+        "date": "2025-05-28",
+        "start_time": "13:30:00",
+        "end_time": "17:30:00",
+        "venue": "Azure",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 1
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 8,
+    "fields": {
+        "title": "",
+        "date": "2025-05-27",
+        "start_time": "19:30:00",
+        "end_time": "23:00:00",
+        "venue": "Ammos",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 1
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 11,
+    "fields": {
+        "title": "",
+        "date": "2025-05-24",
+        "start_time": "16:00:00",
+        "end_time": "19:00:00",
+        "venue": "Drift",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 3
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 12,
+    "fields": {
+        "title": "",
+        "date": "2025-05-24",
+        "start_time": "12:00:00",
+        "end_time": "16:00:00",
+        "venue": "Drift",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 3
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 13,
+    "fields": {
+        "title": "",
+        "date": "2025-05-25",
+        "start_time": "13:00:00",
+        "end_time": "17:00:00",
+        "venue": "Drift",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 3
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 14,
+    "fields": {
+        "title": "",
+        "date": "2025-05-23",
+        "start_time": "13:00:00",
+        "end_time": "17:00:00",
+        "venue": "Drift",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 1
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 15,
+    "fields": {
+        "title": "",
+        "date": "2025-05-24",
+        "start_time": "14:00:00",
+        "end_time": "18:00:00",
+        "venue": "Aura",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 1
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 16,
+    "fields": {
+        "title": "",
+        "date": "2025-05-25",
+        "start_time": "14:00:00",
+        "end_time": "18:00:00",
+        "venue": "Aura",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 1
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 21,
+    "fields": {
+        "title": "",
+        "date": "2025-05-31",
+        "start_time": "14:00:00",
+        "end_time": "18:00:00",
+        "venue": "Aura",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 1
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 23,
+    "fields": {
+        "title": "",
+        "date": "2025-05-30",
+        "start_time": "13:00:00",
+        "end_time": "17:00:00",
+        "venue": "Drift",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 1
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 26,
+    "fields": {
+        "title": "",
+        "date": "2025-05-23",
+        "start_time": "17:00:00",
+        "end_time": "21:00:00",
+        "venue": "Drift",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 3
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 36,
+    "fields": {
+        "title": "",
+        "date": "2025-05-20",
+        "start_time": "14:00:00",
+        "end_time": "18:00:00",
+        "venue": "Aura",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 3
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 37,
+    "fields": {
+        "title": "",
+        "date": "2025-05-20",
+        "start_time": "19:45:00",
+        "end_time": "22:45:00",
+        "venue": "Aura",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 6
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 38,
+    "fields": {
+        "title": "",
+        "date": "2025-05-21",
+        "start_time": "14:00:00",
+        "end_time": "18:00:00",
+        "venue": "Aura",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 4
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 39,
+    "fields": {
+        "title": "",
+        "date": "2025-05-21",
+        "start_time": "19:45:00",
+        "end_time": "22:45:00",
+        "venue": "Aura",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 5
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 40,
+    "fields": {
+        "title": "",
+        "date": "2025-05-28",
+        "start_time": "19:45:00",
+        "end_time": "22:45:00",
+        "venue": "Aura",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 5
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 41,
+    "fields": {
+        "title": "",
+        "date": "2025-05-22",
+        "start_time": "13:30:00",
+        "end_time": "17:30:00",
+        "venue": "Azure",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 3
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 42,
+    "fields": {
+        "title": "",
+        "date": "2025-05-29",
+        "start_time": "13:30:00",
+        "end_time": "17:30:00",
+        "venue": "Azure",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 3
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 43,
+    "fields": {
+        "title": "",
+        "date": "2025-05-22",
+        "start_time": "14:00:00",
+        "end_time": "18:00:00",
+        "venue": "Aura",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 4
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 44,
+    "fields": {
+        "title": "",
+        "date": "2025-05-23",
+        "start_time": "14:00:00",
+        "end_time": "18:00:00",
+        "venue": "Aura",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 4
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 45,
+    "fields": {
+        "title": "",
+        "date": "2025-05-28",
+        "start_time": "14:00:00",
+        "end_time": "18:00:00",
+        "venue": "Aura",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 4
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 46,
+    "fields": {
+        "title": "",
+        "date": "2025-05-29",
+        "start_time": "14:00:00",
+        "end_time": "18:00:00",
+        "venue": "Aura",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 4
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 47,
+    "fields": {
+        "title": "",
+        "date": "2025-05-30",
+        "start_time": "14:00:00",
+        "end_time": "18:00:00",
+        "venue": "Aura",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 4
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 48,
+    "fields": {
+        "title": "",
+        "date": "2025-05-22",
+        "start_time": "19:30:00",
+        "end_time": "23:30:00",
+        "venue": "Ammos",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 5
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 49,
+    "fields": {
+        "title": "",
+        "date": "2025-05-29",
+        "start_time": "19:30:00",
+        "end_time": "23:30:00",
+        "venue": "Ammos",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 5
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 50,
+    "fields": {
+        "title": "",
+        "date": "2025-05-23",
+        "start_time": "14:00:00",
+        "end_time": "18:00:00",
+        "venue": "Azure",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 5
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 51,
+    "fields": {
+        "title": "",
+        "date": "2025-05-23",
+        "start_time": "19:30:00",
+        "end_time": "23:30:00",
+        "venue": "Ammos",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 6
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 52,
+    "fields": {
+        "title": "",
+        "date": "2025-05-23",
+        "start_time": "19:45:00",
+        "end_time": "22:45:00",
+        "venue": "Aura",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 7
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 53,
+    "fields": {
+        "title": "",
+        "date": "2025-05-24",
+        "start_time": "19:45:00",
+        "end_time": "22:45:00",
+        "venue": "Aura",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 3
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 54,
+    "fields": {
+        "title": "",
+        "date": "2025-05-24",
+        "start_time": "14:00:00",
+        "end_time": "18:00:00",
+        "venue": "Azure",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 4
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 55,
+    "fields": {
+        "title": "",
+        "date": "2025-05-25",
+        "start_time": "14:00:00",
+        "end_time": "18:00:00",
+        "venue": "Azure",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 6
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 56,
+    "fields": {
+        "title": "",
+        "date": "2025-05-26",
+        "start_time": "14:00:00",
+        "end_time": "18:00:00",
+        "venue": "Aura",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 3
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 57,
+    "fields": {
+        "title": "",
+        "date": "2025-05-27",
+        "start_time": "14:00:00",
+        "end_time": "18:00:00",
+        "venue": "Aura",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 3
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 58,
+    "fields": {
+        "title": "",
+        "date": "2025-05-27",
+        "start_time": "19:45:00",
+        "end_time": "22:45:00",
+        "venue": "Aura",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 6
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 59,
+    "fields": {
+        "title": "",
+        "date": "2025-05-30",
+        "start_time": "17:00:00",
+        "end_time": "21:00:00",
+        "venue": "Drift",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 3
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 60,
+    "fields": {
+        "title": "",
+        "date": "2025-05-30",
+        "start_time": "14:00:00",
+        "end_time": "18:00:00",
+        "venue": "Azure",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 5
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 61,
+    "fields": {
+        "title": "",
+        "date": "2025-05-30",
+        "start_time": "19:30:00",
+        "end_time": "23:30:00",
+        "venue": "Ammos",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 6
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 62,
+    "fields": {
+        "title": "",
+        "date": "2025-05-30",
+        "start_time": "19:45:00",
+        "end_time": "22:45:00",
+        "venue": "Aura",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 7
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 63,
+    "fields": {
+        "title": "",
+        "date": "2025-05-31",
+        "start_time": "12:00:00",
+        "end_time": "16:00:00",
+        "venue": "Drift",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 3
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 64,
+    "fields": {
+        "title": "",
+        "date": "2025-05-31",
+        "start_time": "16:00:00",
+        "end_time": "19:00:00",
+        "venue": "Drift",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 3
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 65,
+    "fields": {
+        "title": "",
+        "date": "2025-05-31",
+        "start_time": "19:45:00",
+        "end_time": "22:45:00",
+        "venue": "Aura",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 3
+    }
+},
+{
+    "model": "core.shift",
+    "pk": 66,
+    "fields": {
+        "title": "",
+        "date": "2025-05-31",
+        "start_time": "14:00:00",
+        "end_time": "18:00:00",
+        "venue": "Azure",
+        "is_event": false,
+        "has_dj": false,
+        "comment": "",
+        "dj": 4
+    }
+},
+{
+    "model": "core.notification",
+    "pk": 1,
+    "fields": {
+        "dj": 3,
+        "message": "Shift deleted: Aura on 2025-05-20 (14:00:00 - 18:00:00)",
+        "created_at": "2025-05-19T15:12:53.010Z",
+        "is_read": false
+    }
+},
+{
+    "model": "core.notification",
+    "pk": 2,
+    "fields": {
+        "dj": 1,
+        "message": "Shift added: Azure on 2025-05-20 (13:00 - 17:00)",
+        "created_at": "2025-05-19T15:13:21.940Z",
+        "is_read": false
+    }
+},
+{
+    "model": "core.notification",
+    "pk": 3,
+    "fields": {
+        "dj": 1,
+        "message": "Shift deleted: Azure on 2025-05-20 (13:00:00 - 17:00:00)",
+        "created_at": "2025-05-19T15:13:38.236Z",
+        "is_read": false
+    }
+},
+{
+    "model": "core.notification",
+    "pk": 4,
+    "fields": {
+        "dj": 3,
+        "message": "Shift deleted: Drift on 2025-05-23 (17:00:00 - 21:00:00)",
+        "created_at": "2025-05-19T15:14:03.438Z",
+        "is_read": false
+    }
+},
+{
+    "model": "core.notification",
+    "pk": 5,
+    "fields": {
+        "dj": 3,
+        "message": "Shift added: Drift on 2025-05-23 (17:00 - 21:00)",
+        "created_at": "2025-05-19T15:14:28.644Z",
+        "is_read": false
+    }
+},
+{
+    "model": "core.notification",
+    "pk": 6,
+    "fields": {
+        "dj": 1,
+        "message": "Shift added: Aura on 2025-05-20 (13:00 - 16:00)",
+        "created_at": "2025-05-19T15:24:12.488Z",
+        "is_read": false
+    }
+},
+{
+    "model": "core.notification",
+    "pk": 7,
+    "fields": {
+        "dj": 1,
+        "message": "Shift deleted: Aura on 2025-05-20 (13:00:00 - 16:00:00)",
+        "created_at": "2025-05-19T15:24:32.990Z",
+        "is_read": false
+    }
+},
+{
+    "model": "core.notification",
+    "pk": 8,
+    "fields": {
+        "dj": 1,
+        "message": "Shift added: Drift on 2025-05-20 (13:00 - 14:00)",
+        "created_at": "2025-05-19T15:25:06.193Z",
+        "is_read": false
+    }
+},
+{
+    "model": "core.notification",
+    "pk": 9,
+    "fields": {
+        "dj": 1,
+        "message": "Shift deleted: Drift on 2025-05-20 (13:00:00 - 14:00:00)",
+        "created_at": "2025-05-19T15:34:05.004Z",
+        "is_read": false
+    }
+},
+{
+    "model": "core.notification",
+    "pk": 10,
+    "fields": {
+        "dj": 1,
+        "message": "Shift added: Aura on 2025-05-20 (13:00 - 17:00)",
+        "created_at": "2025-05-19T15:34:24.221Z",
+        "is_read": false
+    }
+},
+{
+    "model": "core.notification",
+    "pk": 11,
+    "fields": {
+        "dj": 1,
+        "message": "Shift deleted: Aura on 2025-05-20 (13:00:00 - 17:00:00)",
+        "created_at": "2025-05-19T15:34:59.247Z",
+        "is_read": false
+    }
+},
+{
+    "model": "core.notification",
+    "pk": 12,
+    "fields": {
+        "dj": 1,
+        "message": "Shift added: Drift on 2025-05-20 (13:00 - 14:00)",
+        "created_at": "2025-05-19T15:36:50.218Z",
+        "is_read": false
+    }
+},
+{
+    "model": "core.notification",
+    "pk": 13,
+    "fields": {
+        "dj": 1,
+        "message": "Shift deleted: Drift on 2025-05-20 (13:00:00 - 14:00:00)",
+        "created_at": "2025-05-19T15:37:57.494Z",
+        "is_read": false
+    }
+},
+{
+    "model": "core.notification",
+    "pk": 14,
+    "fields": {
+        "dj": 1,
+        "message": "Shift added: Drift on 2025-05-20 (13:00 - 14:00)",
+        "created_at": "2025-05-19T15:40:12.744Z",
+        "is_read": false
+    }
+},
+{
+    "model": "core.notification",
+    "pk": 15,
+    "fields": {
+        "dj": 1,
+        "message": "Shift deleted: Drift on 2025-05-20 (13:00:00 - 14:00:00)",
+        "created_at": "2025-05-20T05:51:31.128Z",
+        "is_read": false
+    }
+},
+{
+    "model": "core.notification",
+    "pk": 16,
+    "fields": {
+        "dj": 1,
+        "message": "Shift added: Drift on 2025-05-20 (13:00 - 16:00)",
+        "created_at": "2025-05-20T05:52:49.182Z",
+        "is_read": false
+    }
+},
+{
+    "model": "core.notification",
+    "pk": 17,
+    "fields": {
+        "dj": 1,
+        "message": "Shift deleted: Drift on 2025-05-20 (13:00:00 - 16:00:00)",
+        "created_at": "2025-05-20T05:53:49.981Z",
+        "is_read": false
+    }
+},
+{
+    "model": "core.notification",
+    "pk": 18,
+    "fields": {
+        "dj": 1,
+        "message": "Shift added: Drift on 2025-05-20 (13:00 - 15:00)",
+        "created_at": "2025-05-20T05:55:46.308Z",
+        "is_read": false
+    }
+},
+{
+    "model": "core.notification",
+    "pk": 19,
+    "fields": {
+        "dj": 1,
+        "message": "Shift deleted: Drift on 2025-05-20 (13:00:00 - 15:00:00)",
+        "created_at": "2025-05-20T06:11:35.676Z",
+        "is_read": false
+    }
+},
+{
+    "model": "core.notification",
+    "pk": 20,
+    "fields": {
+        "dj": 1,
+        "message": "Shift added: Aura on 2025-05-20 (13:00 - 14:00)",
+        "created_at": "2025-05-20T06:18:48.855Z",
+        "is_read": false
+    }
+},
+{
+    "model": "core.notification",
+    "pk": 21,
+    "fields": {
+        "dj": 1,
+        "message": "Shift deleted: Aura on 2025-05-20 (13:00:00 - 14:00:00)",
+        "created_at": "2025-05-20T06:19:13.845Z",
+        "is_read": false
+    }
+},
+{
+    "model": "core.notification",
+    "pk": 22,
+    "fields": {
+        "dj": 1,
+        "message": "Shift deleted: Azure on 2025-05-19 (13:30:00 - 17:30:00)",
+        "created_at": "2025-05-20T06:58:51.854Z",
+        "is_read": false
+    }
+},
+{
+    "model": "core.notification",
+    "pk": 23,
+    "fields": {
+        "dj": 1,
+        "message": "Shift added: Azure on 2025-05-20 (19:00 - 23:00)",
+        "created_at": "2025-05-20T07:30:16.432Z",
+        "is_read": false
+    }
+},
+{
+    "model": "core.notification",
+    "pk": 24,
+    "fields": {
+        "dj": 1,
+        "message": "Shift added: Azure on 2025-05-20 (19:00 - 23:00)",
+        "created_at": "2025-05-20T07:30:42.007Z",
+        "is_read": false
+    }
+},
+{
+    "model": "core.notification",
+    "pk": 25,
+    "fields": {
+        "dj": 1,
+        "message": "Shift added: Azure on 2025-05-20 (19:00 - 23:00)",
+        "created_at": "2025-05-20T07:31:30.524Z",
+        "is_read": false
+    }
+},
+{
+    "model": "core.notification",
+    "pk": 26,
+    "fields": {
+        "dj": 1,
+        "message": "Shift deleted: Azure on 2025-05-20 (19:00:00 - 23:00:00)",
+        "created_at": "2025-05-20T07:31:49.216Z",
+        "is_read": false
+    }
+},
+{
+    "model": "core.notification",
+    "pk": 27,
+    "fields": {
+        "dj": 1,
+        "message": "Shift deleted: Azure on 2025-05-20 (19:00:00 - 23:00:00)",
+        "created_at": "2025-05-20T07:31:51.312Z",
+        "is_read": false
+    }
+},
+{
+    "model": "core.notification",
+    "pk": 28,
+    "fields": {
+        "dj": 1,
+        "message": "Shift deleted: Azure on 2025-05-20 (19:00:00 - 23:00:00)",
+        "created_at": "2025-05-20T07:31:53.498Z",
+        "is_read": false
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add log entry",
+        "content_type": [
+            "admin",
+            "logentry"
+        ],
+        "codename": "add_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change log entry",
+        "content_type": [
+            "admin",
+            "logentry"
+        ],
+        "codename": "change_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete log entry",
+        "content_type": [
+            "admin",
+            "logentry"
+        ],
+        "codename": "delete_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view log entry",
+        "content_type": [
+            "admin",
+            "logentry"
+        ],
+        "codename": "view_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add permission",
+        "content_type": [
+            "auth",
+            "permission"
+        ],
+        "codename": "add_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change permission",
+        "content_type": [
+            "auth",
+            "permission"
+        ],
+        "codename": "change_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete permission",
+        "content_type": [
+            "auth",
+            "permission"
+        ],
+        "codename": "delete_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view permission",
+        "content_type": [
+            "auth",
+            "permission"
+        ],
+        "codename": "view_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add group",
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "codename": "add_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change group",
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "codename": "change_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete group",
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "codename": "delete_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view group",
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "codename": "view_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add user",
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "codename": "add_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change user",
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "codename": "change_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete user",
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "codename": "delete_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view user",
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "codename": "view_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add content type",
+        "content_type": [
+            "contenttypes",
+            "contenttype"
+        ],
+        "codename": "add_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change content type",
+        "content_type": [
+            "contenttypes",
+            "contenttype"
+        ],
+        "codename": "change_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete content type",
+        "content_type": [
+            "contenttypes",
+            "contenttype"
+        ],
+        "codename": "delete_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view content type",
+        "content_type": [
+            "contenttypes",
+            "contenttype"
+        ],
+        "codename": "view_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add session",
+        "content_type": [
+            "sessions",
+            "session"
+        ],
+        "codename": "add_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change session",
+        "content_type": [
+            "sessions",
+            "session"
+        ],
+        "codename": "change_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete session",
+        "content_type": [
+            "sessions",
+            "session"
+        ],
+        "codename": "delete_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view session",
+        "content_type": [
+            "sessions",
+            "session"
+        ],
+        "codename": "view_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add shift",
+        "content_type": [
+            "core",
+            "shift"
+        ],
+        "codename": "add_shift"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change shift",
+        "content_type": [
+            "core",
+            "shift"
+        ],
+        "codename": "change_shift"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete shift",
+        "content_type": [
+            "core",
+            "shift"
+        ],
+        "codename": "delete_shift"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view shift",
+        "content_type": [
+            "core",
+            "shift"
+        ],
+        "codename": "view_shift"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add dj",
+        "content_type": [
+            "core",
+            "dj"
+        ],
+        "codename": "add_dj"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change dj",
+        "content_type": [
+            "core",
+            "dj"
+        ],
+        "codename": "change_dj"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete dj",
+        "content_type": [
+            "core",
+            "dj"
+        ],
+        "codename": "delete_dj"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view dj",
+        "content_type": [
+            "core",
+            "dj"
+        ],
+        "codename": "view_dj"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add notification",
+        "content_type": [
+            "core",
+            "notification"
+        ],
+        "codename": "add_notification"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change notification",
+        "content_type": [
+            "core",
+            "notification"
+        ],
+        "codename": "change_notification"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete notification",
+        "content_type": [
+            "core",
+            "notification"
+        ],
+        "codename": "delete_notification"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view notification",
+        "content_type": [
+            "core",
+            "notification"
+        ],
+        "codename": "view_notification"
+    }
+},
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$76hFEhQoqLJBeTaxZQcqoO$dN+AS9ph9m+fpxNLkFSV6aIPEcUqKtE/4d0ghPNAlVI=",
+        "last_login": "2025-05-16T09:40:05.097Z",
+        "is_superuser": true,
+        "username": "Javi",
+        "first_name": "",
+        "last_name": "",
+        "email": "javibeat@icloud.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2025-05-16T09:38:28.960Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 1,
+    "fields": {
+        "action_time": "2025-05-16T10:05:19.904Z",
+        "user": [
+            "Javi"
+        ],
+        "content_type": [
+            "core",
+            "dj"
+        ],
+        "object_id": "1",
+        "object_repr": "Javi",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 2,
+    "fields": {
+        "action_time": "2025-05-16T10:05:27.048Z",
+        "user": [
+            "Javi"
+        ],
+        "content_type": [
+            "core",
+            "dj"
+        ],
+        "object_id": "2",
+        "object_repr": "Sergio",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 3,
+    "fields": {
+        "action_time": "2025-05-16T10:05:33.415Z",
+        "user": [
+            "Javi"
+        ],
+        "content_type": [
+            "core",
+            "dj"
+        ],
+        "object_id": "3",
+        "object_repr": "Reda",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 4,
+    "fields": {
+        "action_time": "2025-05-16T10:05:37.903Z",
+        "user": [
+            "Javi"
+        ],
+        "content_type": [
+            "core",
+            "dj"
+        ],
+        "object_id": "2",
+        "object_repr": "Sergio",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Is verified\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 5,
+    "fields": {
+        "action_time": "2025-05-16T10:05:45.055Z",
+        "user": [
+            "Javi"
+        ],
+        "content_type": [
+            "core",
+            "dj"
+        ],
+        "object_id": "4",
+        "object_repr": "Yasin",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 6,
+    "fields": {
+        "action_time": "2025-05-16T10:05:51.814Z",
+        "user": [
+            "Javi"
+        ],
+        "content_type": [
+            "core",
+            "dj"
+        ],
+        "object_id": "5",
+        "object_repr": "Batu",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 7,
+    "fields": {
+        "action_time": "2025-05-16T10:05:54.464Z",
+        "user": [
+            "Javi"
+        ],
+        "content_type": [
+            "core",
+            "dj"
+        ],
+        "object_id": "6",
+        "object_repr": "Elena",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 8,
+    "fields": {
+        "action_time": "2025-05-16T10:05:56.462Z",
+        "user": [
+            "Javi"
+        ],
+        "content_type": [
+            "core",
+            "dj"
+        ],
+        "object_id": "7",
+        "object_repr": "Emre",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 9,
+    "fields": {
+        "action_time": "2025-05-19T08:37:38.232Z",
+        "user": [
+            "Javi"
+        ],
+        "content_type": [
+            "core",
+            "shift"
+        ],
+        "object_id": "10",
+        "object_repr": " - 2025-05-24 (Reda)",
+        "action_flag": 3,
+        "change_message": ""
+    }
+}
+]
