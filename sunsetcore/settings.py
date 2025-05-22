@@ -167,3 +167,6 @@ CSRF_TRUSTED_ORIGINS = [
     'https://sunsetdjsnew.onrender.com',
     'https://sunsetdjsnew.onrender.app',
 ]
+
+# Site URL for email links
+SITE_URL = os.getenv("SITE_URL", "http://127.0.0.1:8000")

@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -96,7 +97,7 @@ def login_view(request):
             # Enviar correo con el enlace de login
             send_mail(
                 subject='Your Sunset DJs Login Link',
-                message=f'Hi {dj.name},\n\nClick the link below to access your dashboard:\n\nhttp://127.0.0.1:8000/verify/{token}/\n\nSee you soon!',
+                message=f'Hi {dj.name},\n\nClick the link below to access your dashboard:\n\n{settings.SITE_URL}/verify/{token}/\n\nSee you soon!',
                 from_email='javibeat@gmail.com',
                 recipient_list=[dj.email],
                 fail_silently=False,
