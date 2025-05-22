@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     {% load static %}
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="{% static 'styles.css' %}?{% now 'U' %}">
     <title>Global Calendar</title>
 </head>
 <body>
