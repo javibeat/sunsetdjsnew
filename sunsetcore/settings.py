@@ -33,8 +33,7 @@ DEBUG = os.getenv("DJANGO_DEBUG", "True").lower() == "true"
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
-    'sunsetdjsnew.onrender.com',
-    'sunsetdjsnew.onrender.app'
+    'sunsetdjsnew-production.up.railway.app',
 ]
 
 
@@ -164,9 +163,8 @@ SESSION_SAVE_EVERY_REQUEST = True
 
 # CSRF trusted origins for Render
 CSRF_TRUSTED_ORIGINS = [
-    'https://sunsetdjsnew.onrender.com',
-    'https://sunsetdjsnew.onrender.app',
+    'https://sunsetdjsnew-production.up.railway.app',
 ]
 
 # Site URL for email links
-SITE_URL = os.getenv("SITE_URL", "http://127.0.0.1:8000")
+SITE_URL = os.getenv("SITE_URL", "https://sunsetdjsnew-production.up.railway.app")
