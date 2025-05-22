@@ -1,10 +1,10 @@
-from django.conf import settings
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.crypto import get_random_string
 from django.core.mail import send_mail
 from .models import Shift, DJ
+from django.conf import settings
 
 def home(request):
     # Reutilizar la lógica de global_calendar
