@@ -164,6 +164,7 @@ SESSION_SAVE_EVERY_REQUEST = True
 # CSRF trusted origins for Render
 CSRF_TRUSTED_ORIGINS = [
     'https://sunsetdjsnew-production.up.railway.app',
+    'https://*.railway.app',
 ]
 
 # Site URL for email links

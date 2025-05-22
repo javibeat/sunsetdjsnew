@@ -168,11 +168,9 @@ def dj_dashboard_view(request, dj_id):
 
 
 from django.contrib import messages
-from .models import Shift, DJ
 
 def insert_shift_view(request):
     from datetime import datetime
-    from .models import Notification
 
     djs = DJ.objects.all().order_by('name')
     venues = ['Drift', 'Aura', 'Azure', 'Ammos']
