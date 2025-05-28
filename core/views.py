@@ -292,10 +292,17 @@ def insert_shift_view(request):
             'comment': shift.comment,
             'color': dj_colors.get(shift.dj.name, '#999999') if shift.dj else '#999999',
         })
+
+    dj_summary = []
+    for dj in djs:
+        count = Shift.objects.filter(dj=dj).count()
+        dj_summary.append({'name': dj.name, 'count': count})
+
     return render(request, 'core/shift_form.html', {
         'djs': djs,
         'venues': venues,
         'shifts': shifts_for_calendar,
+        'dj_summary': dj_summary,  # Añadido aquí
     })
 
 

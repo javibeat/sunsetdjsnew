@@ -663,69 +663,33 @@ input[type="checkbox"] {
     color: #a22;
     cursor: pointer;
 }
+.dj-summary {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.09);
+    padding: 1.15rem 1.1rem;
+    margin-top: 0.4rem;
+    margin-bottom: 1.5rem;
+    min-height: 180px;
+    font-size: 1rem;
+}
 
-/* Updated venue-filter styles */
-.venue-filter {
-    padding: 10px 16px;
-    font-size: 0.95rem;
-    font-weight: 500;
-    background-color: #e5e7eb; /* gris claro */
+.dj-summary h3 {
+    margin-top: 0;
+    font-size: 1.2rem;
+    margin-bottom: 0.6rem;
+    font-weight: 600;
     color: #333;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    margin-left: 30px;
-    transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.venue-filter:hover {
-    background-color: #d1d5db;
-    transform: scale(1.03);
+.dj-summary ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
 }
 
-.bg-blue-500 {
-    background-color: #2563eb !important;
-    color: #fff !important;
-}
-
-/* Updated p.text-center > span.flex styles */
-p.text-center > span.flex {
-    justify-content: center; /* centra horizontalmente */
-    flex-wrap: wrap;
-    margin-top: 1rem;
-    gap: 0.5rem;
-}
-/* Custom override styles to ensure priority over Tailwind-like classes */
-.bg-gray-200 {
-    background-color: #e5e7eb !important;
-    color: #333 !important;
-}
-
-.venue-filter {
-    padding: 10px 16px;
+.dj-summary li {
+    padding: 0.4rem 0;
+    border-bottom: 1px solid #eee;
     font-size: 0.95rem;
-    font-weight: 500;
-    background-color: #e5e7eb !important;
-    color: #333 !important;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.2s ease;
-}
-
-.venue-filter:hover {
-    background-color: #d1d5db !important;
-    transform: scale(1.03);
-}
-
-.bg-blue-500 {
-    background-color: #2563eb !important;
-    color: #fff !important;
-}
-
-p.text-center > span.flex {
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 1rem;
-    gap: 0.5rem;
 }
