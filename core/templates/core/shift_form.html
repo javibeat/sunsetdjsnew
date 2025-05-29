@@ -161,16 +161,18 @@
                 <div id="dj-summary-panel"
                      class="panel-card"
                      style="margin-top: 2rem; background-color: #f9f9f9; padding: 1rem; border-radius: 8px;">
-                    <h2 style="margin-bottom: 1rem;">DJ Summary (Monthly)</h2>
-                    <ul id="dj-summary-list" style="list-style: none; padding: 0; margin: 0;">
-                        {% for item in dj_summary %}
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #ddd;">
-                                <strong>{{ item.name }}:</strong> {{ item.count }}
-                            </li>
-                        {% empty %}
-                            <li>No shifts for this month.</li>
-                        {% endfor %}
-                    </ul>
+                    <h2 style="margin-bottom: 1rem;">DJ Summary</h2>
+                    <ol id="dj-summary-list" style="padding-left: 1.5rem; margin: 0;">
+                        {% if dj_summary %}
+                            {% for item in dj_summary %}
+                                <li style="padding: 0.4rem 0; border-bottom: 1px solid #ddd;">
+                                    <strong>{{ item.name }}</strong>: {{ item.count }}
+                                </li>
+                            {% endfor %}
+                        {% else %}
+                            <li>No shifts available.</li>
+                        {% endif %}
+                    </ol>
                 </div>
             </div>
         </aside>
@@ -257,36 +259,25 @@
                             });
                         }
                     },
-                    // Nuevo: escucha cambios de mes/año
+                    // Actualizar DJ Summary siempre al cambiar de mes/año
                     datesSet: function(info) {
-                        // info.start, info.end, info.startStr, info.endStr, info.view.type, etc.
-                        const newMonth = info.start.getMonth() + 1; // 0-based
-                        const newYear = info.start.getFullYear();
                         const djSummaryPanel = document.getElementById('dj-summary-panel');
                         if (djSummaryPanel) {
-                            // Solo pedir si el mes o año cambió
-                            const currentMonth = djSummaryPanel.getAttribute('data-month');
-                            const currentYear = djSummaryPanel.getAttribute('data-year');
-                            if (parseInt(currentMonth) !== newMonth || parseInt(currentYear) !== newYear) {
-                                fetch(`/get_dj_summary/?month=${newMonth}&year=${newYear}`, {
-                                    headers: {
-                                        'X-Requested-With': 'XMLHttpRequest'
-                                    }
-                                })
-                                .then(resp => {
-                                    if (!resp.ok) throw new Error("Summary fetch error");
-                                    return resp.text();
-                                })
-                                .then(html => {
-                                    // El backend debe devolver el <ul> actualizado
-                                    djSummaryPanel.querySelector('ul').outerHTML = html;
-                                    djSummaryPanel.setAttribute('data-month', newMonth);
-                                    djSummaryPanel.setAttribute('data-year', newYear);
-                                })
-                                .catch(err => {
-                                    djSummaryPanel.querySelector('ul').innerHTML = '<li>Error loading summary.</li>';
-                                });
-                            }
+                            fetch('/get_dj_summary/', {
+                                headers: {
+                                    'X-Requested-With': 'XMLHttpRequest'
+                                }
+                            })
+                            .then(resp => {
+                                if (!resp.ok) throw new Error("Summary fetch error");
+                                return resp.text();
+                            })
+                            .then(html => {
+                                djSummaryPanel.querySelector('ul').outerHTML = html;
+                            })
+                            .catch(err => {
+                                djSummaryPanel.querySelector('ul').innerHTML = '<li>Error loading summary.</li>';
+                            });
                         }
                     }
                 });

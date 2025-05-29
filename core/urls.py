@@ -10,4 +10,5 @@ urlpatterns = [
     path('dj/<int:dj_id>/dashboard/', views.dj_dashboard_view, name='dj_dashboard'),
     path('insert/', views.insert_shift_view, name='insert_shift'),
     path('delete_shift/<int:shift_id>/', views.delete_shift_view, name='delete_shift'),
+    path('get_dj_summary/', views.get_dj_summary_view, name='get_dj_summary'),
 ]

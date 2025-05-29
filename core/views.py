@@ -343,3 +343,36 @@ def delete_shift_view(request, shift_id):
         return JsonResponse({'success': True})
     except Shift.DoesNotExist:
         return JsonResponse({'success': False, 'error': 'Shift not found'}, status=404)
+
+
+# Vista para obtener el resumen de shifts por DJ en formato JSON
+from django.views.decorators.http import require_GET
+
+@require_GET
+def get_dj_summary_view(request):
+    from datetime import datetime
+    month = request.GET.get('month')
+    year = request.GET.get('year')
+
+    if month and year:
+        try:
+            month = int(month)
+            year = int(year)
+        except ValueError:
+            return JsonResponse({'error': 'Invalid month or year'}, status=400)
+    else:
+        now = datetime.now()
+        month = now.month
+        year = now.year
+
+    djs = DJ.objects.all()
+    summary = []
+    for dj in djs:
+        count = Shift.objects.filter(
+            dj=dj,
+            date__year=year,
+            date__month=month
+        ).count()
+        summary.append({'name': dj.name, 'count': count})
+
+    return JsonResponse({'dj_summary': summary})
