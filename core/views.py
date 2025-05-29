@@ -312,8 +312,8 @@ def insert_shift_view(request):
     for dj in djs:
         count = Shift.objects.filter(
             dj=dj,
-            date__year=current_year,
-            date__month=current_month_num
+            date__year=current_month.year,
+            date__month=current_month.month
         ).count()
         dj_summary.append({'name': dj.name, 'count': count})
 
