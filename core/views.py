@@ -5,6 +5,8 @@ from django.utils.crypto import get_random_string
 from django.core.mail import send_mail
 from .models import Shift, DJ
 from django.conf import settings
+from datetime import datetime
+from django.db.models import Count
 
 def home(request):
     # Reutilizar la lógica de global_calendar
