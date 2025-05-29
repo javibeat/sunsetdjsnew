@@ -160,18 +160,16 @@
                 <!-- DJ Summary Panel Below -->
                 <div id="dj-summary-panel"
                      class="panel-card"
-                     style="margin-top: 2rem; background-color: #f9f9f9; padding: 1rem; border-radius: 8px;"
-                     data-month="{{ current_month|default:now|date:'n' }}"
-                     data-year="{{ current_year|default:now|date:'Y' }}">
+                     style="margin-top: 2rem; background-color: #f9f9f9; padding: 1rem; border-radius: 8px;">
                     <h2 style="margin-bottom: 1rem;">DJ Summary (Monthly)</h2>
                     <ul id="dj-summary-list" style="list-style: none; padding: 0; margin: 0;">
-                    {% for item in dj_summary %}
-                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #ddd;">
-                            <strong>{{ item.name }}:</strong> {{ item.count }}
-                        </li>
-                    {% empty %}
-                        <li>No shifts for this month.</li>
-                    {% endfor %}
+                        {% for item in dj_summary %}
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid #ddd;">
+                                <strong>{{ item.name }}:</strong> {{ item.count }}
+                            </li>
+                        {% empty %}
+                            <li>No shifts for this month.</li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
@@ -261,10 +259,12 @@
                     },
                     // Nuevo: escucha cambios de mes/año
                     datesSet: function(info) {
-                        const newMonth = info.start.getMonth() + 1; // 0-based, sumamos 1
+                        // info.start, info.end, info.startStr, info.endStr, info.view.type, etc.
+                        const newMonth = info.start.getMonth() + 1; // 0-based
                         const newYear = info.start.getFullYear();
                         const djSummaryPanel = document.getElementById('dj-summary-panel');
                         if (djSummaryPanel) {
+                            // Solo pedir si el mes o año cambió
                             const currentMonth = djSummaryPanel.getAttribute('data-month');
                             const currentYear = djSummaryPanel.getAttribute('data-year');
                             if (parseInt(currentMonth) !== newMonth || parseInt(currentYear) !== newYear) {
@@ -278,9 +278,8 @@
                                     return resp.text();
                                 })
                                 .then(html => {
-                                    // Sustituye solo la lista <ul> del resumen
+                                    // El backend debe devolver el <ul> actualizado
                                     djSummaryPanel.querySelector('ul').outerHTML = html;
-                                    // Actualiza los atributos de mes y año
                                     djSummaryPanel.setAttribute('data-month', newMonth);
                                     djSummaryPanel.setAttribute('data-year', newYear);
                                 })
@@ -289,7 +288,7 @@
                                 });
                             }
                         }
-                    },
+                    }
                 });
                 calendar.render();
             }
