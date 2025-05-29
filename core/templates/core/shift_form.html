@@ -261,12 +261,10 @@
                     },
                     // Nuevo: escucha cambios de mes/año
                     datesSet: function(info) {
-                        // info.start, info.end, info.startStr, info.endStr, info.view.type, etc.
-                        const newMonth = info.start.getMonth() + 1; // 0-based
+                        const newMonth = info.start.getMonth() + 1; // 0-based, sumamos 1
                         const newYear = info.start.getFullYear();
                         const djSummaryPanel = document.getElementById('dj-summary-panel');
                         if (djSummaryPanel) {
-                            // Solo pedir si el mes o año cambió
                             const currentMonth = djSummaryPanel.getAttribute('data-month');
                             const currentYear = djSummaryPanel.getAttribute('data-year');
                             if (parseInt(currentMonth) !== newMonth || parseInt(currentYear) !== newYear) {
@@ -280,8 +278,9 @@
                                     return resp.text();
                                 })
                                 .then(html => {
-                                    // El backend debe devolver el <ul> actualizado
+                                    // Sustituye solo la lista <ul> del resumen
                                     djSummaryPanel.querySelector('ul').outerHTML = html;
+                                    // Actualiza los atributos de mes y año
                                     djSummaryPanel.setAttribute('data-month', newMonth);
                                     djSummaryPanel.setAttribute('data-year', newYear);
                                 })
@@ -290,7 +289,7 @@
                                 });
                             }
                         }
-                    }
+                    },
                 });
                 calendar.render();
             }
