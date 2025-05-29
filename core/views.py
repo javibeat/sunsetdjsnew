@@ -175,6 +175,19 @@ def insert_shift_view(request):
     djs = DJ.objects.all().order_by('name')
     venues = ['Drift', 'Aura', 'Azure', 'Ammos']
 
+    # Extraer mes y año del query string (?month=2025-05)
+    month_str = request.GET.get('month')
+    if month_str:
+        try:
+            current_month = datetime.strptime(month_str, "%Y-%m").date()
+        except ValueError:
+            current_month = datetime.now().date()
+    else:
+        current_month = datetime.now().date()
+
+    current_year = current_month.year
+    current_month_num = current_month.month
+
     if request.method == 'POST':
         dj_id = request.POST.get('dj')
         venue = request.POST.get('venue')
@@ -295,14 +308,19 @@ def insert_shift_view(request):
 
     dj_summary = []
     for dj in djs:
-        count = Shift.objects.filter(dj=dj).count()
+        count = Shift.objects.filter(
+            dj=dj,
+            date__year=current_year,
+            date__month=current_month_num
+        ).count()
         dj_summary.append({'name': dj.name, 'count': count})
 
     return render(request, 'core/shift_form.html', {
         'djs': djs,
         'venues': venues,
         'shifts': shifts_for_calendar,
-        'dj_summary': dj_summary,  # Añadido aquí
+        'dj_summary': dj_summary,
+        'current_month': current_month.strftime('%Y-%m'),
     })
 
 
