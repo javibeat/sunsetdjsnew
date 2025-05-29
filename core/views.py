@@ -376,3 +376,58 @@ def get_dj_summary_view(request):
         summary.append({'name': dj.name, 'count': count})
 
     return JsonResponse({'dj_summary': summary})
+
+
+def hr_view(request):
+    from datetime import datetime
+    
+    # Obtener todos los shifts y DJs
+    shifts = Shift.objects.all().order_by('date', 'start_time')
+    djs = DJ.objects.all().order_by('name')
+    venues = ['Drift', 'Aura', 'Azure', 'Ammos']
+    
+    # Definir colores para cada DJ
+    dj_colors = {
+        'Emre': '#4285F4',
+        'Elena': '#EA4335',
+        'Batu': '#FBBC05',
+        'Yasin': '#34A853',
+        'Reda': '#8E24AA',
+        'Sergio': '#16A085',
+        'Javi': '#41B0F6',
+    }
+    
+    # Preparar datos para el calendario
+    shifts_for_calendar = []
+    for shift in shifts:
+        shifts_for_calendar.append({
+            'id': shift.id,
+            'dj': shift.dj,
+            'venue': shift.venue,
+            'date': shift.date.strftime('%Y-%m-%d'),
+            'start_time': shift.start_time.strftime('%H:%M'),
+            'end_time': shift.end_time.strftime('%H:%M'),
+            'is_event': shift.is_event,
+            'has_dj': shift.has_dj,
+            'comment': shift.comment,
+            'color': dj_colors.get(shift.dj.name, '#999999') if shift.dj else '#999999',
+        })
+    
+    # Calcular resumen de DJs para el mes actual
+    current_month = datetime.now().date()
+    dj_summary = []
+    for dj in djs:
+        count = Shift.objects.filter(
+            dj=dj,
+            date__year=current_month.year,
+            date__month=current_month.month
+        ).count()
+        dj_summary.append({'name': dj.name, 'count': count})
+    
+    return render(request, 'core/hr.html', {
+        'shifts': shifts_for_calendar,
+        'djs': djs,
+        'venues': venues,
+        'dj_summary': dj_summary,
+        'current_month': current_month.strftime('%Y-%m'),
+    })

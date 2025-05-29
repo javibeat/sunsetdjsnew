@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <title>HR Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    {% include "core/menu.html" %}
+
+    <div class="container hr-container">
+        <h1>HR Dashboard</h1>
+        <p class="mt-3 text-center text-sm text-gray-500 flex justify-between items-center">
+            Human Resources view with venue and DJ filters.
+            <span class="ml-4 flex gap-2">
+                <button class="venue-filter px-4 py-2 rounded text-sm bg-gray-200" data-venue="Drift">Drift</button>
+                <button class="venue-filter px-4 py-2 rounded text-sm bg-gray-200" data-venue="Aura">Aura</button>
+                <button class="venue-filter px-4 py-2 rounded text-sm bg-gray-200" data-venue="Azure">Azure</button>
+                <button class="venue-filter px-4 py-2 rounded text-sm bg-gray-200" data-venue="Ammos">Ammos</button>
+            </span>
+        </p>
+        
+        <div class="hr-layout">
+            <!-- Panel lateral con filtros de DJ y resumen -->
+            <aside class="hr-panel">
+                <div class="panel-card">
+                    <h2 style="margin-bottom: 1.2rem;">DJ Filters</h2>
+                    <div class="dj-filters">
+                        {% for dj in djs %}
+                            <button class="dj-filter" data-dj="{{ dj.name }}">{{ dj.name }}</button>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <!-- DJ Summary Panel -->
+                <div id="dj-summary-panel" class="panel-card" style="margin-top: 2rem; background-color: #f9f9f9; padding: 1rem; border-radius: 8px;">
+                    <h2 style="margin-bottom: 1rem;">DJ Summary</h2>
+                    <ol id="dj-summary-list" style="padding-left: 1.5rem; margin: 0;">
+                        {% if dj_summary %}
+                            {% for item in dj_summary %}
+                                <li style="padding: 0.4rem 0; border-bottom: 1px solid #ddd;">
+                                    <strong>{{ item.name }}</strong>: {{ item.count }}
+                                </li>
+                            {% endfor %}
+                        {% else %}
+                            <li>No shifts available.</li>
+                        {% endif %}
+                    </ol>
+                </div>
+            </aside>
+            
+            <!-- Calendario principal -->
+            <main class="hr-calendar">
+                <div id="calendar" class="desktop-calendar"></div>
+                
+                <!-- Tabla móvil -->
+                {% if shifts %}
+                <div class="mobile-calendar">
+                    <div style="overflow-x: auto;">
+                        <table style="width:100%; border-collapse: collapse; background: white; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <thead style="background: #f5f7fa;">
+                                <tr>
+                                    <th style="padding: 1rem; text-align:left;">Date</th>
+                                    <th style="padding: 1rem; text-align:left;">DJ</th>
+                                    <th style="padding: 1rem; text-align:left;">Event/Shift</th>
+                                    <th style="padding: 1rem; text-align:left;">Venue</th>
+                                    <th style="padding: 1rem; text-align:left;">Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for shift in shifts %}
+                                <tr class="event-card" data-venue="{{ shift.venue|default:'' }}" data-dj="{{ shift.dj.name|default:'' }}" style="border-top: 1px solid #ececec;">
+                                    <td style="padding: 0.7rem 1rem;">{{ shift.date }}</td>
+                                    <td style="padding: 0.7rem 1rem;">
+                                        {% if shift.dj %}
+                                            <span style="color: {{ shift.color }}; font-weight: 600;">{{ shift.dj.name }}</span>
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                    <td style="padding: 0.7rem 1rem;">
+                                        {% if shift.is_event %}
+                                            <span style="color:#D97706; font-weight: 600;">Event</span>
+                                            {% if shift.comment %}
+                                                <br><span style="color:#6B7280;">{{ shift.comment }}</span>
+                                            {% endif %}
+                                        {% else %}
+                                            Shift
+                                        {% endif %}
+                                    </td>
+                                    <td style="padding: 0.7rem 1rem;">{{ shift.venue|default:"-" }}</td>
+                                    <td style="padding: 0.7rem 1rem;">{{ shift.start_time }} - {{ shift.end_time }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% else %}
+                    <p style="color:#666; font-size:1.1rem;">No shifts available.</p>
+                {% endif %}
+            </main>
+        </div>
+    </div>
+    
+    <!-- FullCalendar CDN CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet" />
+    <!-- FullCalendar CDN JS -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+    
+    <style>
+        .hr-container {
+            max-width: 1400px;
+        }
+        
+        .hr-layout {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .hr-panel {
+            width: 300px;
+            flex-shrink: 0;
+        }
+        
+        .hr-calendar {
+            flex: 1;
+        }
+        
+        .panel-card {
+            background: white;
+            border-radius: 14px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .dj-filters {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .dj-filter {
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            background-color: #e0e0e0;
+            color: #333;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            text-align: left;
+        }
+        
+        .dj-filter:hover {
+            background-color: #ccc;
+        }
+        
+        .dj-filter.active {
+            background-color: #007aff;
+            color: white;
+        }
+        
+        .venue-filter {
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            background-color: #e0e0e0;
+            color: #333;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .venue-filter:hover {
+            background-color: #ccc;
+        }
+
+        .venue-filter.active {
+            background-color: #007aff;
+            color: white;
+        }
+        
+        /* Estilos responsive */
+        .desktop-calendar {
+            display: block;
+        }
+        
+        .mobile-calendar {
+            display: none;
+        }
+        
+        @media (max-width: 1024px) {
+            .hr-layout {
+                flex-direction: column;
+            }
+            
+            .hr-panel {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .desktop-calendar {
+                display: none;
+            }
+            
+            .mobile-calendar {
+                display: block;
+            }
+            
+            .dj-filters {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+    </style>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            if (calendarEl) {
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'dayGridMonth',
+                    height: "auto",
+                    eventMaxStack: 6,
+                    dayMaxEventRows: true,
+                    firstDay: 1,
+                    headerToolbar: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek,listWeek'
+                    },
+                    events: [
+                        {% for shift in shifts %}
+                        {
+                            id: "{{ shift.id }}",
+                            title: "{{ shift.dj.name|default:'Sin DJ' }} - {{ shift.venue }} ({{ shift.start_time }} - {{ shift.end_time }})",
+                            start: "{{ shift.date }}T{{ shift.start_time }}",
+                            end: "{{ shift.date }}T{{ shift.end_time }}",
+                            extendedProps: {
+                                dj: "{{ shift.dj.name|default:'Sin DJ' }}",
+                                venue: "{{ shift.venue }}",
+                                isEvent: {{ shift.is_event|yesno:"true,false" }},
+                                comment: "{{ shift.comment|default:'' }}"
+                            },
+                            backgroundColor: "{{ shift.color|default:'#999999' }}",
+                            textColor: "#ffffff",
+                            borderColor: "transparent"
+                        }{% if not forloop.last %},{% endif %}
+                        {% endfor %}
+                    ],
+                    eventContent: function(arg) {
+                        var customEl = document.createElement('div');
+                        customEl.className = 'fc-event-content';
+                        customEl.setAttribute('data-dj', arg.event.extendedProps.dj);
+                        customEl.setAttribute('data-venue', arg.event.extendedProps.venue);
+                        customEl.style.backgroundColor = arg.event.backgroundColor;
+                        customEl.style.color = 'white';
+                        customEl.style.padding = '2px 5px';
+                        customEl.style.borderRadius = '3px';
+                        customEl.innerText = arg.event.title;
+                        return { domNodes: [customEl] };
+                    },
+                    // Actualizar DJ Summary al cambiar de mes/año
+                    datesSet: function(info) {
+                        const currentDate = info.view.currentStart;
+                        const month = currentDate.getMonth() + 1;
+                        const year = currentDate.getFullYear();
+                        
+                        const djSummaryPanel = document.getElementById('dj-summary-panel');
+                        if (djSummaryPanel) {
+                            fetch(`/get_dj_summary/?month=${month}&year=${year}`, {
+                                headers: {
+                                    'X-Requested-With': 'XMLHttpRequest'
+                                }
+                            })
+                            .then(resp => {
+                                if (!resp.ok) throw new Error("Summary fetch error");
+                                return resp.json();
+                            })
+                            .then(data => {
+                                const summaryList = djSummaryPanel.querySelector('#dj-summary-list');
+                                if (summaryList && data.dj_summary) {
+                                    summaryList.innerHTML = '';
+                                    data.dj_summary.forEach((item, index) => {
+                                        const li = document.createElement('li');
+                                        li.style.cssText = 'padding: 0.4rem 0; border-bottom: 1px solid #ddd;';
+                                        li.innerHTML = `<strong>${item.name}</strong>: ${item.count}`;
+                                        summaryList.appendChild(li);
+                                    });
+                                }
+                            })
+                            .catch(err => {
+                                const summaryList = djSummaryPanel.querySelector('#dj-summary-list');
+                                if (summaryList) {
+                                    summaryList.innerHTML = '<li>Error loading summary.</li>';
+                                }
+                            });
+                        }
+                    }
+                });
+                calendar.render();
+
+                // Filtros de venue
+                const venueButtons = document.querySelectorAll('.venue-filter');
+                const djButtons = document.querySelectorAll('.dj-filter');
+                const events = document.querySelectorAll('.event-card');
+                const allEvents = calendar.getEvents();
+
+                // Función para aplicar filtros
+                function applyFilters() {
+                    const activeVenue = document.querySelector('.venue-filter.active');
+                    const activeDJ = document.querySelector('.dj-filter.active');
+                    const selectedVenue = activeVenue ? activeVenue.dataset.venue : null;
+                    const selectedDJ = activeDJ ? activeDJ.dataset.dj : null;
+
+                    // Filtrar eventos del calendario
+                    allEvents.forEach(event => {
+                        const eventVenue = event.extendedProps.venue;
+                        const eventDJ = event.extendedProps.dj;
+                        const showVenue = !selectedVenue || selectedVenue === eventVenue;
+                        const showDJ = !selectedDJ || selectedDJ === eventDJ;
+                        
+                        if (showVenue && showDJ) {
+                            event.setProp('display', 'auto');
+                        } else {
+                            event.setProp('display', 'none');
+                        }
+                    });
+
+                    // Filtrar tabla móvil
+                    events.forEach(event => {
+                        const eventVenue = event.dataset.venue;
+                        const eventDJ = event.dataset.dj;
+                        const showVenue = !selectedVenue || selectedVenue === eventVenue;
+                        const showDJ = !selectedDJ || selectedDJ === eventDJ;
+                        
+                        if (showVenue && showDJ) {
+                            event.classList.remove('hidden');
+                        } else {
+                            event.classList.add('hidden');
+                        }
+                    });
+                }
+
+                // Event listeners para filtros de venue
+                venueButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const isActive = button.classList.contains('active');
+                        
+                        // Desactivar otros botones de venue
+                        venueButtons.forEach(btn => {
+                            btn.classList.remove('active');
+                            btn.classList.remove('bg-blue-500', 'text-white');
+                            btn.classList.add('bg-gray-200');
+                        });
+                        
+                        // Toggle del botón actual
+                        if (!isActive) {
+                            button.classList.add('active');
+                            button.classList.add('bg-blue-500', 'text-white');
+                            button.classList.remove('bg-gray-200');
+                        }
+                        
+                        applyFilters();
+                    });
+                });
+
+                // Event listeners para filtros de DJ
+                djButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const isActive = button.classList.contains('active');
+                        
+                        // Desactivar otros botones de DJ
+                        djButtons.forEach(btn => {
+                            btn.classList.remove('active');
+                        });
+                        
+                        // Toggle del botón actual
+                        if (!isActive) {
+                            button.classList.add('active');
+                        }
+                        
+                        applyFilters();
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
