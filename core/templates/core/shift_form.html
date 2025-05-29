@@ -261,22 +261,39 @@
                     },
                     // Actualizar DJ Summary siempre al cambiar de mes/año
                     datesSet: function(info) {
+                        // Usar la fecha del título del calendario para obtener el mes correcto
+                        const currentDate = info.view.currentStart;
+                        const month = currentDate.getMonth() + 1; // getMonth() devuelve 0-11
+                        const year = currentDate.getFullYear();
+                        
                         const djSummaryPanel = document.getElementById('dj-summary-panel');
                         if (djSummaryPanel) {
-                            fetch('/get_dj_summary/', {
+                            fetch(`/get_dj_summary/?month=${month}&year=${year}`, {
                                 headers: {
                                     'X-Requested-With': 'XMLHttpRequest'
                                 }
                             })
                             .then(resp => {
                                 if (!resp.ok) throw new Error("Summary fetch error");
-                                return resp.text();
+                                return resp.json();
                             })
-                            .then(html => {
-                                djSummaryPanel.querySelector('ul').outerHTML = html;
+                            .then(data => {
+                                const summaryList = djSummaryPanel.querySelector('#dj-summary-list');
+                                if (summaryList && data.dj_summary) {
+                                    summaryList.innerHTML = '';
+                                    data.dj_summary.forEach((item, index) => {
+                                        const li = document.createElement('li');
+                                        li.style.cssText = 'padding: 0.4rem 0; border-bottom: 1px solid #ddd;';
+                                        li.innerHTML = `<strong>${item.name}</strong>: ${item.count}`;
+                                        summaryList.appendChild(li);
+                                    });
+                                }
                             })
                             .catch(err => {
-                                djSummaryPanel.querySelector('ul').innerHTML = '<li>Error loading summary.</li>';
+                                const summaryList = djSummaryPanel.querySelector('#dj-summary-list');
+                                if (summaryList) {
+                                    summaryList.innerHTML = '<li>Error loading summary.</li>';
+                                }
                             });
                         }
                     }
