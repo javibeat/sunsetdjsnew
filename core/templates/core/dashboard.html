@@ -34,6 +34,28 @@
         .aura-color { background-color: #FF5722; }
         .azure-color { background-color: #2196F3; }
         .ammos-color { background-color: #9C27B0; }
+        
+        .export-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-top: 1rem;
+            width: 100%;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .export-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        
+        .export-button:active {
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
@@ -51,6 +73,14 @@
                     </li>
                     <!-- <li>Send to HR</li> -->
                 </ul>
+                
+                <!-- Botón de exportar calendario -->
+                <button class="export-button" onclick="exportCalendar()">
+                    📅 Export to Phone Calendar
+                </button>
+                <small style="color: #666; font-size: 0.8rem; margin-top: 0.5rem; display: block;">
+                    Downloads your shifts from today  the month
+                </small>
                 
                 <!-- Leyenda de venues -->
                 <div class="venue-legend">
@@ -82,6 +112,11 @@
     </div>
 </body>
     <script>
+        // Función para exportar calendario
+        function exportCalendar() {
+            const djId = {{ dj.id }};
+            window.location.href = `/dj/${djId}/export-calendar/`;
+        }
   document.addEventListener('DOMContentLoaded', function () {
     const currentDjId = {{ dj.id }};
     var calendarEl = document.getElementById('calendar');

@@ -247,7 +247,13 @@ def insert_shift_view(request):
                     comment=comment if is_event else ''
                 )
                 created_count += 1
+                # En la función insert_shift_view, cambiar:
                 if request.session.get('dj_id') == dj.id:
+                    Notification.objects.create(dj=dj, message=f"Shift added: {venue} on {date_obj} ({sh:02d}:{sm:02d} - {eh:02d}:{em:02d})")
+                
+                # Por:
+                # Crear notificación para el DJ del turno (no solo si está en sesión)
+                if dj:  # Solo si hay un DJ asignado
                     Notification.objects.create(dj=dj, message=f"Shift added: {venue} on {date_obj} ({sh:02d}:{sm:02d} - {eh:02d}:{em:02d})")
 
         shifts = Shift.objects.all().order_by('-date')
@@ -258,7 +264,7 @@ def insert_shift_view(request):
             'Batu': '#FBBC05',
             'Yasin': '#34A853',
             'Reda': '#8E24AA',
-            'Sergio': '#16A085',
+            'Sergio': '#16A085',  # Cambiado de #F39C12 a #9C27B0
             'Javi': '#41B0F6',  # Cambiado de #F39C12 a #9C27B0
         }
         shifts_for_calendar = []
@@ -266,6 +272,7 @@ def insert_shift_view(request):
             shifts_for_calendar.append({
                 'id': shift.id,
                 'dj': shift.dj.name if shift.dj else 'Sin DJ',
+                'dj_id': shift.dj.id if shift.dj else None,  # Agregar esta línea
                 'venue': shift.venue,
                 'date': shift.date.strftime('%Y-%m-%d'),
                 'start_time': shift.start_time.strftime('%H:%M'),
@@ -337,8 +344,11 @@ from .models import Notification
 def delete_shift_view(request, shift_id):
     try:
         shift = Shift.objects.get(id=shift_id)
-        if request.session.get('dj_id') == shift.dj.id:
+        
+        # Crear notificación solo para el DJ del turno eliminado
+        if shift.dj:  # Solo si el turno tenía un DJ asignado
             Notification.objects.create(dj=shift.dj, message=f"Shift deleted: {shift.venue} on {shift.date} ({shift.start_time} - {shift.end_time})")
+        
         shift.delete()
         return JsonResponse({'success': True})
     except Shift.DoesNotExist:
@@ -431,3 +441,75 @@ def hr_view(request):
         'dj_summary': dj_summary,
         'current_month': current_month.strftime('%Y-%m'),
     })
+
+
+def export_calendar_view(request, dj_id):
+    from datetime import datetime, date
+    from django.http import HttpResponse
+    import calendar as cal
+    
+    try:
+        dj = DJ.objects.get(id=dj_id)
+        if request.session.get('dj_id') != dj.id:
+            return redirect('login')
+        
+        # Obtener fecha actual y calcular el rango del mes
+        today = date.today()
+        current_year = today.year
+        current_month = today.month
+        
+        # Obtener el último día del mes
+        last_day = cal.monthrange(current_year, current_month)[1]
+        end_of_month = date(current_year, current_month, last_day)
+        
+        # Filtrar turnos desde hoy hasta el final del mes
+        shifts = Shift.objects.filter(
+            dj=dj,
+            date__gte=today,
+            date__lte=end_of_month
+        ).order_by('date', 'start_time')
+        
+        # Generar contenido del archivo .ics
+        ics_content = []
+        ics_content.append('BEGIN:VCALENDAR')
+        ics_content.append('VERSION:2.0')
+        ics_content.append('PRODID:-//Sunset DJs//Calendar//EN')
+        ics_content.append('CALSCALE:GREGORIAN')
+        ics_content.append('METHOD:PUBLISH')
+        
+        for shift in shifts:
+            # Crear datetime objects para el evento
+            start_datetime = datetime.combine(shift.date, shift.start_time)
+            end_datetime = datetime.combine(shift.date, shift.end_time)
+            
+            # Formatear fechas para .ics (formato UTC)
+            start_str = start_datetime.strftime('%Y%m%dT%H%M%S')
+            end_str = end_datetime.strftime('%Y%m%dT%H%M%S')
+            
+            # Crear evento
+            ics_content.append('BEGIN:VEVENT')
+            ics_content.append(f'UID:{shift.id}@sunsetdjs.com')
+            ics_content.append(f'DTSTART:{start_str}')
+            ics_content.append(f'DTEND:{end_str}')
+            ics_content.append(f'SUMMARY:DJ Set - {shift.venue}')
+            
+            # Descripción del evento
+            description = f'DJ: {dj.name}\\nVenue: {shift.venue}'
+            if shift.is_event and shift.comment:
+                description += f'\\nEvent: {shift.comment}'
+            ics_content.append(f'DESCRIPTION:{description}')
+            ics_content.append(f'LOCATION:{shift.venue}')
+            ics_content.append('STATUS:CONFIRMED')
+            ics_content.append('END:VEVENT')
+        
+        ics_content.append('END:VCALENDAR')
+        
+        # Crear respuesta HTTP con el archivo .ics
+        response = HttpResponse('\r\n'.join(ics_content), content_type='text/calendar')
+        filename = f'{dj.name}_shifts_{current_year}_{current_month:02d}.ics'
+        response['Content-Disposition'] = f'attachment; filename="{filename}"'
+        
+        return response
+        
+    except DJ.DoesNotExist:
+        return redirect('login')

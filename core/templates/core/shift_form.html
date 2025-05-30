@@ -206,12 +206,33 @@
                     eventMaxStack: 6,
                     dayMaxEventRows: true,
                     firstDay: 1,
+                    // Líneas 213-235 - Corregir la inicialización del calendario:
                     headerToolbar: {
-                        left: 'prev,next today',
-                        center: 'title',
-                        right: 'dayGridMonth,timeGridWeek,listWeek'
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,listWeek'
                     },
-                    events: shifts,
+                    events: [
+                    {% for shift in shifts %}
+                    {
+                    id: {{ shift.id }},
+                    title: "{{ shift.dj }} - {{ shift.venue }} ({{ shift.start_time }} - {{ shift.end_time }})",
+                    start: "{{ shift.date }}T{{ shift.start_time }}",
+                    end: "{{ shift.date }}T{{ shift.end_time }}",
+                    backgroundColor: "{{ shift.color }}",
+                    extendedProps: {
+                    dj: "{{ shift.dj }}",
+                    djId: {{ shift.dj_id|default:'null' }},
+                    venue: "{{ shift.venue }}",
+                    start_time: "{{ shift.start_time }}",
+                    end_time: "{{ shift.end_time }}",
+                    is_event: {{ shift.is_event|yesno:"true,false" }},
+                    has_dj: {{ shift.has_dj|yesno:"true,false" }},
+                    comment: "{{ shift.comment|escapejs }}"
+                    }
+                    },
+                    {% endfor %}
+                    ],
                     eventContent: function(arg) {
                         var customEl = document.createElement('div');
                         customEl.className = 'fc-event-content';
@@ -233,6 +254,16 @@
                         const event = info.event;
                         const confirmed = confirm(`Do you want to delete this shift?\n${event.title}`);
                         if (confirmed) {
+                            // GUARDAR EN LOCALSTORAGE ANTES DE LA ELIMINACIÓN
+                            const djId = event.extendedProps.djId || '1';
+                            const notificationData = {
+                                title: event.title,
+                                djId: djId,
+                                timestamp: new Date().getTime()
+                            };
+                            localStorage.setItem('shiftRemoved', JSON.stringify(notificationData));
+                            console.log('Delete notification saved BEFORE deletion:', notificationData);
+                            
                             fetch(`/delete_shift/${event.id}/`, {
                                 method: 'DELETE',
                                 headers: {
@@ -241,20 +272,12 @@
                                 }
                             }).then(response => {
                                 if (response.ok) {
-                                    event.remove(); // elimina el evento del calendario
-                                    
-                                    // Disparar evento personalizado de eliminación
-                                    const djId = event.extendedProps.dj === 'Sin DJ' ? null : '{{ request.session.dj_id }}';
-                                    const customEvent = new CustomEvent('shiftRemoved', {
-                                        detail: { 
-                                            title: event.title, 
-                                            djId: djId 
-                                        }
-                                    });
-                                    document.dispatchEvent(customEvent);
-                                    console.log("Shift removed event dispatched");
+                                    event.remove();
+                                    console.log("Shift deleted successfully");
                                 } else {
                                     alert('Error deleting shift.');
+                                    // Si falla, limpiar localStorage
+                                    localStorage.removeItem('shiftRemoved');
                                 }
                             });
                         }
@@ -303,6 +326,8 @@
         });
     </script>
 </body>
+</html>
+
 <script>
     flatpickr("#multidate", {
         mode: "multiple",
@@ -311,46 +336,59 @@
         altInput: true,
         altFormat: "F j, Y"
     });
-</script>
 
-<script>
+    // Manejar envío del formulario y evento shiftAdded
     document.getElementById('shiftForm').addEventListener('submit', function(e) {
-        // No detenemos el envío del formulario, solo añadimos el evento
+        e.preventDefault(); // Prevenir envío inmediato
+        
         const djId = document.getElementById('dj').value;
         const djName = document.getElementById('dj').options[document.getElementById('dj').selectedIndex].text;
         const venue = document.getElementById('venue').value;
         const dates = document.getElementById('multidate').value;
         
-        // Crear y disparar el evento personalizado
-        const event = new CustomEvent('shiftAdded', {
-            detail: { 
-                title: `${venue} on ${dates}`, 
-                djId: djId 
-            }
+        // Guardar inmediatamente en localStorage ANTES del envío
+        const notificationData = {
+            title: `${venue} on ${dates}`,
+            djId: djId,
+            timestamp: new Date().getTime()
+        };
+        
+        localStorage.setItem('shiftAdded', JSON.stringify(notificationData));
+        console.log('Notification saved BEFORE form submission:', notificationData);
+        
+        // Ahora sí enviar el formulario
+        setTimeout(() => {
+            e.target.submit();
+        }, 100); // Pequeño delay para asegurar que localStorage se guarde
+    });
+
+    // Para eliminaciones, interceptar los enlaces de eliminación
+    document.addEventListener('DOMContentLoaded', function() {
+        // Buscar todos los enlaces o botones de eliminación
+        const deleteLinks = document.querySelectorAll('a[href*="delete"], button[onclick*="delete"], .delete-shift');
+        
+        deleteLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Extraer información del turno desde el elemento
+                const shiftTitle = this.getAttribute('data-shift-title') || 
+                                 this.closest('tr')?.querySelector('.shift-title')?.textContent ||
+                                 'Shift';
+                const djId = this.getAttribute('data-dj-id') || 
+                            document.querySelector('[data-current-dj-id]')?.getAttribute('data-current-dj-id') ||
+                            '1';
+                
+                // Guardar en localStorage ANTES de la eliminación
+                const notificationData = {
+                    title: shiftTitle,
+                    djId: djId,
+                    timestamp: new Date().getTime()
+                };
+                
+                localStorage.setItem('shiftRemoved', JSON.stringify(notificationData));
+                console.log('Delete notification saved:', notificationData);
+            });
         });
-        document.dispatchEvent(event);
-        console.log("Shift added event dispatched");
     });
 </script>
-<script>
-    // Escuchar los eventos y almacenar en localStorage
-    document.addEventListener('shiftAdded', function(e) {
-        // Almacenar en localStorage para recuperarlo en el dashboard
-        localStorage.setItem('shiftAdded', JSON.stringify({
-            title: e.detail.title,
-            djId: e.detail.djId,
-            timestamp: new Date().getTime()
-        }));
-    });
-    
-    document.addEventListener('shiftRemoved', function(e) {
-        // Almacenar en localStorage para recuperarlo en el dashboard
-        localStorage.removeItem('shiftRemoved');
-        localStorage.setItem('shiftRemoved', JSON.stringify({
-            title: e.detail.title,
-            djId: e.detail.djId,
-            timestamp: new Date().getTime()
-        }));
-    });
-</script>
+
 </html>
