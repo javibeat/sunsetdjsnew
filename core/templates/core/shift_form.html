@@ -256,8 +256,26 @@
                         if (confirmed) {
                             // GUARDAR EN LOCALSTORAGE ANTES DE LA ELIMINACIÓN
                             const djId = event.extendedProps.djId || '1';
+                            
+                            // Extraer información más detallada del evento
+                            const venue = event.extendedProps.venue || event.title.split(' ')[0];
+                            const startTime = event.extendedProps.start_time || '';
+                            const endTime = event.extendedProps.end_time || '';
+                            const eventDate = event.start.toLocaleDateString('en-US', {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric'
+                            });
+                            
+                            let title;
+                            if (startTime && endTime) {
+                                title = `${venue} on ${eventDate} (${startTime} - ${endTime})`;
+                            } else {
+                                title = `${venue} on ${eventDate}`;
+                            }
+                            
                             const notificationData = {
-                                title: event.title,
+                                title: title,
                                 djId: djId,
                                 timestamp: new Date().getTime()
                             };
@@ -346,9 +364,19 @@
         const venue = document.getElementById('venue').value;
         const dates = document.getElementById('multidate').value;
         
+        // Obtener las horas del primer bloque de tiempo
+        const startHour = document.querySelector('select[name="start_hour[]"]').value;
+        const startMinute = document.querySelector('select[name="start_minute[]"]').value;
+        const startAmpm = document.querySelector('select[name="start_ampm[]"]').value;
+        const endHour = document.querySelector('select[name="end_hour[]"]').value;
+        const endMinute = document.querySelector('select[name="end_minute[]"]').value;
+        const endAmpm = document.querySelector('select[name="end_ampm[]"]').value;
+        
+        const timeRange = `${startHour}:${startMinute} ${startAmpm.toUpperCase()} - ${endHour}:${endMinute} ${endAmpm.toUpperCase()}`;
+        
         // Guardar inmediatamente en localStorage ANTES del envío
         const notificationData = {
-            title: `${venue} on ${dates}`,
+            title: `${venue} on ${dates} (${timeRange})`,
             djId: djId,
             timestamp: new Date().getTime()
         };
