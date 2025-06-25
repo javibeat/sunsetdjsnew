@@ -21,6 +21,7 @@ def home(request):
         'Reda': '#8E24AA',
         'Sergio': '#16A085',
         'Javi': '#41B0F6',
+        'Sofia': '#FF6B9D',
     }
     
     # Preparar datos para el calendario
@@ -53,6 +54,7 @@ def global_calendar(request):
         'Reda': '#8E24AA',
         'Sergio': '#16A085',
         'Javi': '#41B0F6',
+        'Sofia': '#FF6B9D',
     }
     
     # Preparar datos para el calendario
