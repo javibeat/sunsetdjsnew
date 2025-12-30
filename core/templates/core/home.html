@@ -1,34 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     {% load static %}
     <link rel="stylesheet" href="{% static 'styles.css' %}">
     <title>Sunset DJs</title>
-    
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://sunsetdjsnew-production.up.railway.app/" />
     <meta property="og:title" content="Sunset DJs" />
-    <meta property="og:description" content="Esta página muestra los horarios mensuales de los DJs de Sunset Hospitality." />
+    <meta property="og:description" content="This page shows the monthly schedules for Sunset Hospitality DJs." />
     <meta property="og:image" content="https://sunsetdjsnew-production.up.railway.app/static/logo.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    
+
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://sunsetdjsnew-production.up.railway.app/" />
     <meta property="twitter:title" content="Sunset DJs" />
-    <meta property="twitter:description" content="Esta página muestra los horarios mensuales de los DJs de Sunset Hospitality." />
+    <meta property="twitter:description" content="This page shows the monthly schedules for Sunset Hospitality DJs." />
     <meta property="twitter:image" content="https://sunsetdjsnew-production.up.railway.app/static/logo.png" />
-    
+
     <!-- WhatsApp -->
     <meta property="og:site_name" content="Sunset DJs" />
-    <meta name="description" content="Esta página muestra los horarios mensuales de los DJs de Sunset Hospitality." />
+    <meta name="description" content="This page shows the monthly schedules for Sunset Hospitality DJs." />
+
 
 </head>
+
 <body>
     {% include "core/menu.html" %}
     {% include "core/calendar.html" %}
 </body>
+
 </html>
