@@ -6,7 +6,8 @@ from django.core.mail import send_mail
 from .models import Shift, DJ
 from django.conf import settings
 from datetime import datetime
-from django.db.models import Count
+from django.utils import timezone
+from django.db.models import Count, Q
 
 def home(request):
     # Reutilizar la lógica de global_calendar
@@ -517,16 +518,32 @@ def export_calendar_view(request, dj_id):
         return redirect('login')
 
 @require_GET
+@require_GET
 def get_gigs_api(request):
     dj_name = request.GET.get('dj')
     if not dj_name:
         return JsonResponse({'error': 'DJ name is required'}, status=400)
     
-    # Filter shifts by DJ name (case insensitive)
-    shifts = Shift.objects.filter(dj__name__iexact=dj_name).order_by('date', 'start_time')
+    # Obtener la hora local actual
+    now = timezone.localtime(timezone.now())
+    today = now.date()
+    current_month = today.month
+    current_year = today.year
+    
+    # Filtrar por DJ, mes/año actual y que la fecha sea hoy o futura
+    shifts = Shift.objects.filter(
+        dj__name__iexact=dj_name,
+        date__year=current_year,
+        date__month=current_month,
+        date__gte=today
+    ).order_by('date', 'start_time')
     
     data = []
     for shift in shifts:
+        # Si el gig es hoy, comprobar si ya ha terminado
+        if shift.date == today and shift.end_time <= now.time():
+            continue
+            
         data.append({
             "venue": shift.venue,
             "date": shift.date.strftime('%Y-%m-%d'),
@@ -535,7 +552,13 @@ def get_gigs_api(request):
             "comment": shift.comment
         })
     
-    response = JsonResponse(data, safe=False)
-    # Allow javibeat.com to access this data
-    response["Access-Control-Allow-Origin"] = "https://javibeat.com"
+    # Añadimos datos de servidor para debug y metemos los gigs en un objeto
+    response_data = {
+        "server_date": today.strftime('%Y-%m-%d'),
+        "gigs": data
+    }
+    
+    response = JsonResponse(response_data, safe=False)
+    # Permitir acceso desde cualquier origen (CORS fix)
+    response["Access-Control-Allow-Origin"] = "*"
     return response
