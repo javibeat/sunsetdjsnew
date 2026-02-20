@@ -12,5 +12,6 @@ urlpatterns = [
     path('delete_shift/<int:shift_id>/', views.delete_shift_view, name='delete_shift'),
     path('get_dj_summary/', views.get_dj_summary_view, name='get_dj_summary'),
     path('hr/', views.hr_view, name='hr'),
+    path('api/gigs/', views.get_gigs_api, name='get_gigs_api'),
     path('dj/<int:dj_id>/export-calendar/', views.export_calendar_view, name='export_calendar'),
 ]

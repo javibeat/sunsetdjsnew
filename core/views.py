@@ -515,3 +515,27 @@ def export_calendar_view(request, dj_id):
         
     except DJ.DoesNotExist:
         return redirect('login')
+
+@require_GET
+def get_gigs_api(request):
+    dj_name = request.GET.get('dj')
+    if not dj_name:
+        return JsonResponse({'error': 'DJ name is required'}, status=400)
+    
+    # Filter shifts by DJ name (case insensitive)
+    shifts = Shift.objects.filter(dj__name__iexact=dj_name).order_by('date', 'start_time')
+    
+    data = []
+    for shift in shifts:
+        data.append({
+            "venue": shift.venue,
+            "date": shift.date.strftime('%Y-%m-%d'),
+            "time": f"{shift.start_time.strftime('%I:%M %p')} - {shift.end_time.strftime('%I:%M %p')}",
+            "is_event": shift.is_event,
+            "comment": shift.comment
+        })
+    
+    response = JsonResponse(data, safe=False)
+    # Allow javibeat.com to access this data
+    response["Access-Control-Allow-Origin"] = "https://javibeat.com"
+    return response
